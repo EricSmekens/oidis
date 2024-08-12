@@ -1,0 +1,9 @@
+{
+    "appId": "oidis-frontend-edqeumr",
+    "appUrl": "https://services.cloud.mongodb.com/groups/65562f2ff6342115b4a59af4/apps/66b76a1ab32c02a0128b9a61",
+    "baseUrl": "https://services.cloud.mongodb.com",
+    "clientApiBaseUrl": "https://eu-central-1.aws.services.cloud.mongodb.com",
+    "dataApiBaseUrl": "https://eu-central-1.aws.data.mongodb-api.com",
+    "dataExplorerLink": "https://cloud.mongodb.com/links/65562f2ff6342115b4a59af4/explorer/AtlasCluster/database/collection/find",
+    "dataSourceName": "mongodb-atlas"
+}
