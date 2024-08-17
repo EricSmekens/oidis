@@ -16,8 +16,8 @@ const authorize = async () => {
     return responseBody.access_token;
 }
 
-const fetchNumberOfRecipes = async (authToken: string) => {
-    const response = await fetch(`${dataBaseUri}/aggregate`,
+const fetchAllRecipes = async (authToken: string) => {
+    const response = await fetch(`${dataBaseUri}/find`,
         {
             method: "post",
             headers: {
@@ -29,18 +29,14 @@ const fetchNumberOfRecipes = async (authToken: string) => {
                 "dataSource": "mongodb-atlas",
                 "database": "oidis",
                 "collection": "recipes",
-                "pipeline": [
-                    {
-                      "$count": "count"
-                    }
-                  ]
+                "filter": { }
             })
         });
 
-    return (await response.json()).documents[0].count;
+    return (await response.json()).documents;
 }
 
-export const getNumberOfRecipes = async () => {
+export const fetchRecipes = async () => {
     const authToken = await authorize();
-    return fetchNumberOfRecipes(authToken);
+    return fetchAllRecipes(authToken);
 };
