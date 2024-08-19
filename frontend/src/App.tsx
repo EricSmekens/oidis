@@ -1,5 +1,4 @@
 import { createResource, Match, Show, Switch, For, type Component } from 'solid-js';
-import { Col, Grid } from "~/components/ui/grid";
 import {
   Card,
   CardContent,
@@ -22,6 +21,8 @@ import { fetchRecipes } from './clients/oidisClient';
 
 import logo from './logo.svg';
 import styles from './App.module.css';
+import { Timeline } from './components/ui/timeline';
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from './components/ui/table';
 
 const App: Component = () => {
   const [recipes] = createResource(fetchRecipes);
@@ -41,34 +42,60 @@ const App: Component = () => {
           </Match>
           <Match when={recipes()}>
 
-          <Carousel>
-            <CarouselContent>
-            <For each={recipes()}>
-                {(recipe, i) => (
-                  <CarouselItem>
-                    <Card>
-                      <CardHeader>
-                        <CardTitle>{recipe.name}</CardTitle>
-                        <CardDescription>{recipe.description}</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <For each={recipe.products}>
-                          {(product, i) => (
-                            <p>{product.name}</p>
-                          )}
-                        </For>
-                      </CardContent>
-                      <CardFooter>
-                        <Button class="w-full">Add to todo</Button>
-                      </CardFooter>
-                    </Card>
-                  </CarouselItem>
-                )}
-              </For>
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
+            <Carousel>
+              <CarouselContent>
+                <For each={recipes()}>
+                  {(recipe, i) => (
+                    <CarouselItem>
+                      <Card>
+                        <CardHeader>
+                          <CardTitle>{recipe.name}</CardTitle>
+                          <CardDescription>{recipe.description}</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                          Ingredients
+                          <Table>
+                            <TableHeader>
+                              <TableRow>
+                                <TableHead></TableHead>
+                                <TableHead class="text-center">Aantal</TableHead>
+                                <TableHead class="text-center">Eenheid</TableHead>
+                                <TableHead class="text-right">Prijs</TableHead>
+                              </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                              <For each={recipe.products}>
+                                {(product) => (
+                                  <TableRow>
+                                    <TableCell class="text-left">{product.name}</TableCell>
+                                    <TableCell class="text-middle">{product.count}</TableCell>
+                                    <TableCell class="text-middle">{product.unit}</TableCell>
+                                    <TableCell class="text-right">TBD</TableCell>
+                                  </TableRow>
+                                )}
+                              </For>
+                            </TableBody>
+                          </Table>
+                          <Button class="w-full">Add to todo</Button>
+                        </CardContent>
+                        <CardFooter>
+                          <div class="flex-col justify-center w-full">
+                            <div class="">Zo maak je het:</div>
+                            <Timeline items={recipe.steps.map((x: any, index: number) => {
+                              return { title: `Stap ${index + 1}`, description: x };
+                            })}
+                              activeItem={0}
+                            />
+                          </div>
+                        </CardFooter>
+                      </Card>
+                    </CarouselItem>
+                  )}
+                </For>
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+            </Carousel>
 
 
           </Match>
