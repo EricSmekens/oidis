@@ -31,7 +31,7 @@ const App: Component = () => {
             <span>Error: {recipes.error()}</span>
           </Match>
           <Match when={recipes()}>
-            <Carousel>
+            <Carousel class="max-w-screen-md">
               <CarouselContent>
                 <For each={recipes()}>
                   {(recipe) => (
