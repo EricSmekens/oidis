@@ -1,4 +1,4 @@
-import { createResource, Match, Show, Switch, For, type Component } from 'solid-js';
+import { createResource, Match, Show, Switch, For, type Component, Index } from 'solid-js';
 
 import {
   Carousel,
@@ -12,18 +12,18 @@ import { fetchRecipes } from './clients/oidisClient';
 
 import logo from './logo.svg';
 import styles from './App.module.css';
-import RecipeCard from './components/recipeCard';
+import RecipeCard from './components/RecipeCard';
 
 const App: Component = () => {
   const [recipes] = createResource(fetchRecipes);
 
   return (
     <div class={styles.App}>
-      <header class={styles.header}>
-        <img src={logo} class={styles.logo} alt="logo" />
+      <div class={styles.maincontent}>
 
         <Show when={recipes.loading}>
-          <p>Loading...</p>
+          <p class="text-3xl">Loading...</p>
+          <img src={logo} class={styles.logo} alt="logo" />
         </Show>
 
         <Switch>
@@ -31,12 +31,12 @@ const App: Component = () => {
             <span>Error: {recipes.error()}</span>
           </Match>
           <Match when={recipes()}>
-            <Carousel class="max-w-screen-md">
+            <Carousel class="w-full max-w-xs">
               <CarouselContent>
                 <For each={recipes()}>
                   {(recipe) => (
                     <CarouselItem>
-                      <RecipeCard recipe={recipe} />
+                      <RecipeCard recipe={recipe}/>
                     </CarouselItem>
                   )}
                 </For>
@@ -46,7 +46,7 @@ const App: Component = () => {
             </Carousel>
           </Match>
         </Switch>
-      </header>
+      </div>
     </div>
   );
 };

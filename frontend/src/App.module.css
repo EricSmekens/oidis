@@ -4,19 +4,22 @@
 
 .logo {
   animation: logo-spin infinite 20s linear;
-  height: 4vmin;
+  height: 40vmin;
   pointer-events: none;
 }
 
-.header {
-  background-color: #282c34;
+.maincontent {
+  background-color: #888b92;
   min-height: 100vh;
+  min-width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  overflow: hidden;
+  padding-top: 16px;
 }
 
 @keyframes logo-spin {
