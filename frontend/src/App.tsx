@@ -1,19 +1,11 @@
 import { createResource, Match, Show, Switch, For, type Component } from 'solid-js';
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious
-} from "~/components/ui/carousel";
-
 import { fetchRecipes } from './clients/oidisClient';
 
 import logo from './logo.svg';
 import styles from './App.module.css';
-import RecipeCard from './components/RecipeCard';
 import { makeCache } from '@solid-primitives/resource';
+import RecipeList from './components/RecipeList';
 
 const App: Component = () => {
   const [recipesCachedCall] = makeCache(fetchRecipes, { 
@@ -36,19 +28,7 @@ const App: Component = () => {
             <span>Error: {recipes.error()}</span>
           </Match>
           <Match when={recipes()}>
-            <Carousel class="w-full max-w-xs">
-              <CarouselContent>
-                <For each={recipes()}>
-                  {(recipe) => (
-                    <CarouselItem>
-                      <RecipeCard recipe={recipe}/>
-                    </CarouselItem>
-                  )}
-                </For>
-              </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
-            </Carousel>
+            <RecipeList recipes={recipes()}/>
           </Match>
         </Switch>
       </div>

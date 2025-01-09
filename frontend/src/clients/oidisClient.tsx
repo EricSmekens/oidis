@@ -1,3 +1,5 @@
+import { Recipe } from "./Recipe";
+
 const dataBaseUri = "https://eu-central-1.aws.data.mongodb-api.com/app/oidis-backend-cmimcek/endpoint/data/v1/action";
 const authUri = "https://eu-central-1.aws.services.cloud.mongodb.com/api/client/v2.0/app/oidis-backend-cmimcek/auth/providers/anon-user/login";
 
@@ -33,7 +35,7 @@ const fetchAllRecipes = async (authToken: string) => {
             })
         });
 
-    return (await response.json()).documents;
+    return (await response.json()).documents as Recipe[];
 }
 
 export const fetchRecipes = async () => {
