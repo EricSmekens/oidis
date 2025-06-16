@@ -1,65 +1,61 @@
-import { For, type Component } from 'solid-js';
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle
-} from "~/components/ui/card";
-import { Button } from "~/components/ui/button";
-import { Timeline } from '~/components/ui/timeline';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '~/components/ui/table';
+import { createSignal, For, type Component } from 'solid-js';
+
+import recipeImage from '../assets/recipe.jpg';
 
 const RecipeCard: Component = (props: any) => {
+    const [timeLeft, setTimeLeft] = createSignal(0);
+    const [timerActive, setTimerActive] = createSignal(false);
+
+    const startTimer = (seconds: number) => {
+        setTimeLeft(seconds);
+        setTimerActive(true);
+        const interval = setInterval(() => {
+            setTimeLeft((prev) => {
+                if (prev <= 1) {
+                    clearInterval(interval);
+                    setTimerActive(false);
+                    return 0;
+                }
+                return prev - 1;
+            });
+        }, 1000);
+    };
     const recipe = () => props.recipe;
     return (
-        <Card>
-            <CardHeader>
-                <CardTitle class="text-3xl">{recipe().name}</CardTitle>
-                <CardDescription>{recipe().description}</CardDescription>
-            </CardHeader>
-            <CardContent>
-                <p class="text-lg">Ingredients</p>
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead></TableHead>
-                            <TableHead class="text-center">Aantal</TableHead>
-                            <TableHead class="text-center">Eenheid</TableHead>
-                            <TableHead class="text-right">Prijs</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        <For each={recipe().products}>
-                            {(product) => (
-                                <TableRow>
-                                    <TableCell class="text-left">{product.name}</TableCell>
-                                    <TableCell class="text-middle">{product.count}</TableCell>
-                                    <TableCell class="text-middle">{product.unit}</TableCell>
-                                    <TableCell class="text-right">Under construction 🛠️</TableCell>
-                                </TableRow>
-                            )}
-                        </For>
-                    </TableBody>
-                </Table>
+        <main class="max-w-3xl mx-auto p-6 font-sans text-gray-800">
+            <img src={recipeImage} alt={recipe().name} class="w-full h-64 object-cover rounded-lg shadow" />
+            <h1 class="text-4xl font-bold mt-6 mb-4">{recipe().name}</h1>
 
-                <div class="flex flex-col justify-start items-center">
-                    <p class="text-lg">Instructions</p>
-                    <div class="max-w-screen-sm">
-                        <Timeline items={recipe().steps.map((x: any, index: number) => {
-                            return { title: `Stap ${index + 1}`, description: x };
-                        })}
-                            activeItem={0}
-                        />
-                    </div>
-                </div>
-            </CardContent>
-            <CardFooter class="flex flex-row flex-wrap justify-center">
-                <Button class="mx-2 basis-1/3" disabled>Add to todo (Microsoft) - Under construction 🛠️</Button>
-                <Button class="mx-2 basis-1/3" disabled>Add to reminders (iOS) - Under construction 🛠️</Button>
-            </CardFooter>
-        </Card>
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold mb-2">Ingrediënten</h2>
+                <ul class="grid grid-cols-2 gap-2 bg-gray-50 p-4 rounded-lg shadow-sm">
+                    {recipe().products.map((item: any) => (
+                        <li class="before:content-['•'] before:mr-2">{item.name}</li>
+                    ))}
+                </ul>
+            </section>
+
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold mb-2">Bereidingswijze</h2>
+                <ol class="list-decimal pl-6 space-y-2">
+                    {recipe().steps.map((step: any) => (
+                        <li>{step}</li>
+                    ))}
+                </ol>
+            </section>
+
+            <section>
+                <h2 class="text-2xl font-semibold mb-2">Kooktimer</h2>
+                <button
+                    onClick={() => startTimer(600)}
+                    disabled={timerActive()}
+                    class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 disabled:opacity-50"
+                >
+                    Start 10 minuten timer
+                </button>
+                {timerActive() && <p class="mt-2 text-lg">Tijd over: {timeLeft()} seconden</p>}
+            </section>
+        </main>
     );
 };
 
