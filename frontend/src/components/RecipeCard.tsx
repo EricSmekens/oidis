@@ -8,14 +8,20 @@ const RecipeCard: Component = (props: any) => {
         <main class={styles['recipe-card']}>
             <img src={recipeImage} alt={recipe().name} />
             <h1>{recipe().name}</h1>
+            <h4>{recipe().description}</h4>
 
             <section class="mb-8">
                 <h2>Ingrediënten</h2>
-                <ul>
-                    {recipe().products.map((item: any) => (
-                        <li class="before:content-['•'] before:mr-2">{item.count} {item.unit} {item.name}</li>
-                    ))}
-                </ul>
+                <table class={styles['ingredients-table']}>
+                    <tbody>
+                        {recipe().products.map((item: any) => (
+                            <tr>
+                                <td class={styles['ingredient-amount']}>{item.count} {item.unit}</td>
+                                <td class={styles['ingredient-name']}>{item.name}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </section>
 
             <section class="mb-8">
