@@ -91,9 +91,9 @@
   color: #ff9800; /* Fork Ranger orange */
 }
 
-.recipe-card h4 {
-  font-size: 1.25rem;
-  font-weight: 600;
+.recipe-card h5 {
+  font-size: 1rem;
+  font-weight: 400;
   margin-bottom: 8px;
   color: #163d11; /* Fork Ranger orange */
 }

@@ -6,9 +6,14 @@ const RecipeCard: Component = (props: any) => {
     const recipe = () => props.recipe;
     return (
         <main class={styles['recipe-card']}>
-            <img src={recipeImage} alt={recipe().name} />
+            <img src={recipe().picture || recipeImage} alt={recipe().name} />
             <h1>{recipe().name}</h1>
-            <h4>{recipe().description}</h4>
+            <h5>{recipe().description}</h5>
+            
+            <section class="mb-8">
+                <p>{recipe().amountOfPersons} personen</p>
+                <p>{recipe().preparationDurationInMinutes} minuten</p>
+            </section>
 
             <section class="mb-8">
                 <h2>Ingrediënten</h2>
