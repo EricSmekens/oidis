@@ -1,65 +1,46 @@
-import { For, type Component } from 'solid-js';
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle
-} from "~/components/ui/card";
-import { Button } from "~/components/ui/button";
-import { Timeline } from '~/components/ui/timeline';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '~/components/ui/table';
+import { createSignal, For, type Component } from 'solid-js';
+import styles from '../App.module.css';
+import recipeImage from '../assets/recipe.jpg';
 
 const RecipeCard: Component = (props: any) => {
     const recipe = () => props.recipe;
     return (
-        <Card>
-            <CardHeader>
-                <CardTitle class="text-3xl">{recipe().name}</CardTitle>
-                <CardDescription>{recipe().description}</CardDescription>
-            </CardHeader>
-            <CardContent>
-                <p class="text-lg">Ingredients</p>
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead></TableHead>
-                            <TableHead class="text-center">Aantal</TableHead>
-                            <TableHead class="text-center">Eenheid</TableHead>
-                            <TableHead class="text-right">Prijs</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        <For each={recipe().products}>
-                            {(product) => (
-                                <TableRow>
-                                    <TableCell class="text-left">{product.name}</TableCell>
-                                    <TableCell class="text-middle">{product.count}</TableCell>
-                                    <TableCell class="text-middle">{product.unit}</TableCell>
-                                    <TableCell class="text-right">Under construction 🛠️</TableCell>
-                                </TableRow>
-                            )}
-                        </For>
-                    </TableBody>
-                </Table>
+        <main class={styles['recipe-card']}>
+            <img src={recipe().picture || recipeImage} alt={recipe().name} />
+            <h1>{recipe().name}</h1>
+            <h5>{recipe().description}</h5>
+            
+            <section class="mb-8">
+                <p>{recipe().amountOfPersons} personen</p>
+                <p>{recipe().preparationDurationInMinutes} minuten</p>
+            </section>
 
-                <div class="flex flex-col justify-start items-center">
-                    <p class="text-lg">Instructions</p>
-                    <div class="max-w-screen-sm">
-                        <Timeline items={recipe().steps.map((x: any, index: number) => {
-                            return { title: `Stap ${index + 1}`, description: x };
-                        })}
-                            activeItem={0}
-                        />
-                    </div>
-                </div>
-            </CardContent>
-            <CardFooter class="flex flex-row flex-wrap justify-center">
-                <Button class="mx-2 basis-1/3" disabled>Add to todo (Microsoft) - Under construction 🛠️</Button>
-                <Button class="mx-2 basis-1/3" disabled>Add to reminders (iOS) - Under construction 🛠️</Button>
-            </CardFooter>
-        </Card>
+            <section class="mb-8">
+                <h2>Ingrediënten</h2>
+                <table class={styles['ingredients-table']}>
+                    <tbody>
+                        {recipe().products.map((item: any) => (
+                            <tr>
+                                <td class={styles['ingredient-amount']}>{item.count} {item.unit}</td>
+                                <td class={styles['ingredient-name']}>{item.name}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="mb-8">
+                <h2>Bereidingswijze</h2>
+                <ol>
+                    {recipe().steps.map((step: any, idx: number) => (
+                        <li>
+                            <span class={styles['step-number']}>{idx + 1}</span>
+                            <span>{step}</span>
+                        </li>
+                    ))}
+                </ol>
+            </section>
+        </main>
     );
 };
 

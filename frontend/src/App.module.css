@@ -1,32 +1,211 @@
 .App {
-  text-align: center;
-}
-
-.logo {
-  animation: logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.maincontent {
-  background-color: #888b92;
   min-height: 100vh;
-  min-width: 100vw;
+  background: #f6f7f9;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-  overflow: hidden;
-  padding-top: 16px;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+}
+
+.logo {
+  height: 60px;
+  margin-bottom: 24px;
+  animation: logo-spin infinite 20s linear;
+}
+
+.maincontent {
+  background: #fffbe7; /* Soft yellow background */
+  border-radius: 24px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08), 0 1.5px 6px rgba(0,0,0,0.04);
+  padding: 32px 24px;
+  margin-top: 40px;
+  min-width: 340px;
+  max-width: 420px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.text-3xl {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #2d2d2d;
+  margin-bottom: 16px;
 }
 
 @keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg);}
+  to { transform: rotate(360deg);}
+}
+
+/* Carousel styles */
+.w-full {
+  width: 100%;
+}
+.max-w-xs {
+  max-width: 340px;
+}
+
+/* RecipeCard modern look */
+.recipe-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  padding: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid #e6e6e6;
+}
+
+.recipe-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 14px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  border: 2px solid #e6e6e6;
+  background: #fffbe7;
+}
+
+.recipe-card h1 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #163d11;         /* Deep green */
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 24px 0 12px 0;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.recipe-card h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #ff9800; /* Fork Ranger orange */
+}
+
+.recipe-card h5 {
+  font-size: 1rem;
+  font-weight: 400;
+  margin-bottom: 8px;
+  color: #163d11; /* Fork Ranger orange */
+}
+
+.recipe-card ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: #f6f7f9;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  width: 100%;
+}
+
+.recipe-card ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.recipe-card li {
+  display: flex;
+  align-items: flex-start;
+  background: #f6f7f9;
+  border-radius: 12px;
+  padding: 16px 18px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  font-size: 1rem;
+  color: #333;
+  position: relative;
+  min-height: 48px;
+  width: 100%;
+  text-align: left;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.recipe-card .step-number {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  background: #388e3c;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-right: 16px;
+  margin-top: 2px;
+}
+
+.recipe-card button {
+  background: #388e3c;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 8px;
+}
+
+.recipe-card button:hover:enabled {
+  background: #2e7031;
+}
+
+.recipe-card button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.recipe-card .mt-2 {
+  margin-top: 8px;
+}
+
+.recipe-card .mb-8 {
+  margin-bottom: 32px;
+}
+
+.recipe-card .ingredients-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  margin-top: 8px;
+}
+
+.recipe-card .ingredients-table td {
+  font-size: 12px;
+  line-height: 1.4;
+  vertical-align: middle;
+}
+
+.recipe-card .ingredient-amount {
+  width: 60px;
+  text-align: right;
+  font-weight: 600;
+  color: #328136;
+}
+
+.recipe-card .ingredient-name {
+  text-align: left;
+  color: #333;
+  font-weight: 500;
 }
