@@ -14,45 +14,62 @@ import logo from './logo.svg';
 import styles from './App.module.css';
 import RecipeCard from './components/RecipeCard';
 import { makeCache } from '@solid-primitives/resource';
+import { Route, Router } from '@solidjs/router';
+import RecipeDetailPage from './components/RecipeDetailPage';
+import MainPage from './components/MainPage';
 
 const App: Component = () => {
-  const [recipesCachedCall] = makeCache(fetchRecipes, { 
+  const [recipesCachedCall] = makeCache(fetchRecipes, {
     storage: localStorage,
     expires: 1000 * 60 * 60 * 24 // 1 day
   });
   const [recipes] = createResource(recipesCachedCall);
 
-  return (
-    <div class={styles.App}>
-      <div class={styles.maincontent}>
+  function LoadingPage() {
+    return (
+      <div class={styles.App}>
+        <div class={styles.maincontent}>
 
-        <Show when={recipes.loading}>
-          <p class="text-3xl">Loading...</p>
-          <img src={logo} class={styles.logo} alt="logo" />
-        </Show>
+          <Show when={recipes.loading}>
+            <p class="text-3xl">Loading...</p>
+            <img src={logo} class={styles.logo} alt="logo" />
+          </Show>
 
-        <Switch>
-          <Match when={recipes.error}>
-            <span>Error: {recipes.error()}</span>
-          </Match>
-          <Match when={recipes()}>
-            <Carousel class="w-full max-w-xs">
-              <CarouselContent>
-                <For each={recipes()}>
-                  {(recipe) => (
-                    <CarouselItem>
-                      <RecipeCard recipe={recipe}/>
-                    </CarouselItem>
-                  )}
-                </For>
-              </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
-            </Carousel>
-          </Match>
-        </Switch>
+          <Switch>
+            <Match when={recipes.error}>
+              <span>Error: {recipes.error()}</span>
+            </Match>
+            <Match when={recipes()}>
+              <Carousel class="w-full max-w-xs">
+                <CarouselContent>
+                  <For each={recipes()}>
+                    {(recipe) => (
+                      <CarouselItem>
+                        <RecipeCard recipe={recipe} />
+                      </CarouselItem>
+                    )}
+                  </For>
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+              </Carousel>
+            </Match>
+          </Switch>
+        </div>
       </div>
-    </div>
+    );
+  }
+
+  function MainPageWrapper() {
+    return <MainPage recipes={recipes()} />;
+  }
+
+  return (
+    <Router>
+      <Route path="/" component={MainPageWrapper} />
+      {/* <Route path="/recipe/:id" component={<RecipeDetailPage recipes={recipes() || []} />} /> */}
+      <Route path="*" component={LoadingPage} />
+    </Router>
   );
 };
 
