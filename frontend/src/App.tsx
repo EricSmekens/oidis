@@ -35,7 +35,7 @@ const App: Component = () => {
             <img src={logo} class={styles.logo} alt="logo" />
           </Show>
 
-          <Switch>
+          {/* <Switch>
             <Match when={recipes.error}>
               <span>Error: {recipes.error()}</span>
             </Match>
@@ -54,7 +54,7 @@ const App: Component = () => {
                 <CarouselNext />
               </Carousel>
             </Match>
-          </Switch>
+          </Switch> */}
         </div>
       </div>
     );
@@ -64,10 +64,14 @@ const App: Component = () => {
     return <MainPage recipes={recipes()} />;
   }
 
+  function RecipeDetailPageWrapper() {
+    return <RecipeDetailPage recipes={recipes() || []} />;
+  }
+
   return (
     <Router>
       <Route path="/" component={MainPageWrapper} />
-      {/* <Route path="/recipe/:id" component={<RecipeDetailPage recipes={recipes() || []} />} /> */}
+      <Route path="/recipe/:id" component={RecipeDetailPageWrapper} />
       <Route path="*" component={LoadingPage} />
     </Router>
   );

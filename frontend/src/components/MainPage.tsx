@@ -27,7 +27,7 @@ export default function MainPage(props: { recipes: any[] }) {
           {recipe => (
             <div
               class={styles.recipeCard}
-              onClick={() => navigate(`/recipe/${recipe.id}`)}
+              onClick={() => navigate(`/recipe/${recipe._id}`)}
               tabIndex={0}
               role="button"
             >

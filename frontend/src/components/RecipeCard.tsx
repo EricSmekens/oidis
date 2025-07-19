@@ -1,11 +1,20 @@
 import { createSignal, For, type Component } from 'solid-js';
 import styles from '../App.module.css';
 import recipeImage from '../assets/recipe.jpg';
+import { useNavigate } from '@solidjs/router';
 
 const RecipeCard: Component = (props: any) => {
     const recipe = () => props.recipe;
+    const navigate = useNavigate();
+
     return (
         <main class={styles['recipe-card']}>
+            <div 
+                role="button"
+                onClick={() => navigate('/')}
+            >
+                ← Terug
+            </div>
             <img src={recipe().picture || recipeImage} alt={recipe().name} />
             <h1>{recipe().name}</h1>
             <h5>{recipe().description}</h5>
