@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { Product, ProductSchema } from 'src/products/products.schema';
 
 @Schema()
 export class Recipe extends Document {
@@ -15,8 +16,8 @@ export class Recipe extends Document {
   @Prop()
   preparationDurationInMinutes: number;
 
-  @Prop({ type: [{ count: Number, unit: String, name: String }] })
-  products: { count: number; unit: string; name: string }[];
+  @Prop({ type: [ProductSchema], default: [] })
+  products: Product[];
 
   @Prop([String])
   steps: string[];
