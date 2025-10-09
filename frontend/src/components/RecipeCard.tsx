@@ -23,7 +23,7 @@ const RecipeCard: Component = (props: any) => {
                         {recipe().products.map((item: any) => (
                             <tr>
                                 <td class={styles['ingredient-amount']}>{item.count} {item.unit}</td>
-                                <td class={styles['ingredient-name']}>{item.name}</td>
+                                <td class={styles['ingredient-name']}>{item.product.name}</td>
                             </tr>
                         ))}
                     </tbody>
