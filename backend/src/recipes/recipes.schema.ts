@@ -1,24 +1,39 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { Types } from 'mongoose';
+
+@Schema()
+export class RecipeProduct {
+  @Prop({ type: Types.ObjectId, required: true, ref: 'Product' })
+  product: Types.ObjectId;
+
+  @Prop({ required: true })
+  count: number;
+
+  @Prop({ required: true })
+  unit: string;
+}
+
+export const RecipeProductSchema = SchemaFactory.createForClass(RecipeProduct);
 
 @Schema()
 export class Recipe extends Document {
-  @Prop()
+  @Prop({ required: true })
   name: string;
 
   @Prop()
   description: string;
 
-  @Prop()
+  @Prop({ required: true })
   amountOfPersons: number;
 
-  @Prop()
+  @Prop({ required: true })
   preparationDurationInMinutes: number;
 
-  @Prop({ type: [{ count: Number, unit: String, name: String }] })
-  products: { count: number; unit: string; name: string }[];
+  @Prop({ type: [RecipeProductSchema], default: [], required: true })
+  products: RecipeProduct[];
 
-  @Prop([String])
+  @Prop({ type: [String], default: [], required: true })
   steps: string[];
 
   @Prop()

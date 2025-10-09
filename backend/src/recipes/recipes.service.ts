@@ -8,10 +8,10 @@ export class RecipesService {
   constructor(@InjectModel(Recipe.name) private recipeModel: Model<Recipe>) {}
 
   async findAll(): Promise<Recipe[]> {
-    return this.recipeModel.find().exec();
+    return this.recipeModel.find().populate('products.product').exec();
   }
 
   async findOne(id: string): Promise<Recipe | null> {
-    return this.recipeModel.findById(id).exec();
+    return this.recipeModel.findById(id).populate('products.product').exec();
   }
 }
