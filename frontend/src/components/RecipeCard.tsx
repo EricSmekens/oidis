@@ -5,6 +5,21 @@ import recipeImage from '../assets/recipe.jpg';
 const RecipeCard: Component = (props: any) => {
     const recipe = () => props.recipe;
 
+    const totalCost = () => {
+        const products = recipe()?.products || [];
+        return products.reduce((sum: number, item: any) => {
+            const p = item.product || {};
+            const packageSize = Number(p.packageSize) || 0;
+            const packagePrize = Number(p.packagePrize) || 0;
+            const count = Number(item.count) || 0;
+
+            if (packageSize <= 0 || packagePrize <= 0) return sum;
+
+            const cost = (count / packageSize) * packagePrize;
+            return sum + cost;
+        }, 0);
+    };
+
     return (
         <main class={styles['recipe-card']}>
             <img src={recipe().picture || recipeImage} alt={recipe().name} />
@@ -28,6 +43,11 @@ const RecipeCard: Component = (props: any) => {
                         ))}
                     </tbody>
                 </table>
+            </section>
+
+            <section class="mb-8">
+                <h2>Kosten</h2>
+                <p>Totale kosten: € {totalCost().toFixed(2)}</p>
             </section>
 
             <section class="mb-8">
