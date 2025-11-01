@@ -1,24 +1,10 @@
 import { type Component } from 'solid-js';
 import styles from '../App.module.css';
 import recipeImage from '../assets/recipe.jpg';
+import { totalCostFor } from '../lib/cost';
 
 const RecipeCard: Component = (props: any) => {
     const recipe = () => props.recipe;
-
-    const totalCost = () => {
-        const products = recipe()?.products || [];
-        return products.reduce((sum: number, item: any) => {
-            const p = item.product || {};
-            const packageSize = Number(p.packageSize) || 0;
-            const packagePrize = Number(p.packagePrize) || 0;
-            const count = Number(item.count) || 0;
-
-            if (packageSize <= 0 || packagePrize <= 0) return sum;
-
-            const cost = (count / packageSize) * packagePrize;
-            return sum + cost;
-        }, 0);
-    };
 
     return (
         <main class={styles['recipe-card']}>
@@ -47,7 +33,7 @@ const RecipeCard: Component = (props: any) => {
 
             <section class="mb-8">
                 <h2>Kosten</h2>
-                <p>Totale kosten: € {totalCost().toFixed(2)}</p>
+                <p>Totale kosten: € {totalCostFor(recipe()).toFixed(2)}</p>
             </section>
 
             <section class="mb-8">

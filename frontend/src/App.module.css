@@ -39,6 +39,36 @@
   margin: 0 auto;
 }
 
+/* Sort control that spans the grid without disturbing card layout */
+.sortRow {
+  grid-column: 1 / -1; /* span all columns */
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  margin-bottom: 6px;
+}
+.sortLabel {
+  font-size: 0.95rem;
+  color: #334; 
+  margin-right: 6px;
+}
+.sortSelect {
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid #e6e6e6;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  font-size: 0.95rem;
+}
+
+.recipeMeta {
+  margin-top: 8px;
+  font-weight: 700;
+  color: #234f1e;
+}
+
 .recipeCard {
   background: #fff;
   border-radius: 18px;
